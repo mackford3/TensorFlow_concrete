@@ -1,7 +1,10 @@
 #Data Notes
 <h1> Goal: to learn TensorFlow and predict the strength of concrete with Neural Networks</h1>
 
-<h2>Things to do</h2>
+<hr>
+
+<h2>Things to remember</h2>
+<p>prior to creating your model you need to split your data up. You need to identify the target and the features, then split into train and testing data</p>
 
 <hr>
 
@@ -10,11 +13,12 @@
     <li>TensorFlow</li>
     <li>TensorFlow-metal</li>
     <li>TensorFlow-macos</li>
+    <li>scikit-learn</li>
     <li>Keras</li>
     <li>matplotlib</li>
 </ul>
 
-<h2> Deep Learning Section for Keras </h2>
+<h1> Deep Learning Section for Keras </h1>
 <ul>
     <li>You could think of each layer in a neural network as performing some kind of relatively simple transformation.</li>
     <li>Without activation functions, neural networks can only learn linear relationships. In order to fit curves, we'll need to use activation functions.</li>
@@ -22,14 +26,7 @@
     <li>The Sequential model we've been using will connect together a list of layers in order from first to last: the first layer gets the input, the last layer produces the output.</li>
 </ul>
 
-<h3>Types of Activation layers</h3>
-<ul>
-    <li>relu</li>
-    <li>softmax</li>
-    <li>sigmoid</li>
-    <li>selu</li>
-</ul>
-<h3>Example: layers</h3>
+<h2>Creating the Model</h2>
 
 <pre>
 model = keras.Sequential([
@@ -41,7 +38,15 @@ model = keras.Sequential([
 ])
 </pre>
 
-<h2>Note 1: input shape</h2>
+<h3>Types of Activation layers</h3>
+<ul>
+    <li>relu</li>
+    <li>softmax</li>
+    <li>sigmoid</li>
+    <li>selu</li>
+</ul>
+
+<h3>Note 1: input shape</h3>
 <p>if you code the input shape as shown above you will get a warning telling you to a better way to do it. <url>https://keras.io/guides/sequential_model/</url> says you can build your model then call model.add Input(shape) and this can start your model with a shape. In general, it's a recommended best practice to always specify the input shape of a Sequential model in advance if you know what it is.</p>
 
 <hr>
@@ -51,6 +56,8 @@ model = keras.Sequential([
 dont use a sequential model if your layers have multiple inputs or expect mutiple outputs
 
 <hr>
+
+<h2>Optimizing, Loss Function and Compiling</h2>
 
 <p>up until now we have just set the foundation for a network. We still need to tell the network what problem to solve that is where we use the loss function</p>
 
@@ -78,19 +85,21 @@ model.compile(
 )
 </pre>
 
+<h2>Traiing the Model</h2>
+
 <pre>
 history = model.fit(
     X_train, y_train,
-    validation_data=(X_valid, y_valid),
+    validation_split=0.2,
     batch_size=256,
-    epochs=10,
+    epochs=100,
 )
 </pre>
 
-<h2>Note: EPOCH</h2>
+<h3>Note: EPOCH</h3>
 <p>An epoch is when all the training data is used at once and is defined as the total number of iterations of all the training data in one cycle for training the machine learning model. Another way to define an epoch is the number of passes a training dataset takes around an algorithm.</p>
 
-<h2>Note: Plotting Loss</h2>
+<h3>Note: Plotting Loss</h3>
 <p>After training your model you can view the loss through the 'history.history' Convert to df and plot</p>
 
 <h3>Capacity & Stopping</h3>
